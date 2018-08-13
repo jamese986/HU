@@ -6533,3 +6533,381 @@ Processing by QuestionsController#show as HTML
   Rendered home/_navbar.html.erb (0.1ms)
   Rendered home/_new_question_form.html.erb (0.2ms)
 Completed 200 OK in 28ms (Views: 25.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for ::1 at 2018-08-13 16:58:28 +0100
+Processing by HomeController#index as HTML
+  [1m[35mQuestion Load (0.8ms)[0m  SELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC
+  Rendered home/index.html.erb within layouts/application (10.4ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (0.4ms)
+Completed 200 OK in 72ms (Views: 64.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 16:58:32 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mQuestion Load (0.1ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.5ms)
+  [1m[35mAnswer Load (0.2ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (4.4ms)
+  Rendered home/_navbar.html.erb (0.0ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 29ms (Views: 26.7ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/answers" for ::1 at 2018-08-13 16:59:21 +0100
+Processing by AnswersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"g86+GJGRCkbkvR5VER9kit+MgSCu7GK4j3X0CjbCWpmrynNtB3VONErledwUMU0FiBg+VSn/iMaUXlVnC+JMZA==", "answer"=>{"question_id"=>"9", "email"=>"elon@tesla.com", "body"=>"Electric cars ftw "}}
+  [1m[36mQuestion Load (0.1ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+Unpermitted parameter: question_id
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "answers" ("email", "body", "question_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["email", "elon@tesla.com"], ["body", "Electric cars ftw "], ["question_id", 9], ["created_at", "2018-08-13 15:59:21.488709"], ["updated_at", "2018-08-13 15:59:21.488709"]]
+  [1m[35m (4.4ms)[0m  commit transaction
+[ActiveJob] Enqueued ActionMailer::DeliveryJob (Job ID: d0e3e623-1dfa-471b-99a0-14014ed3cb7d) to SuckerPunch(mailers) with arguments: "MainMailer", "notify_question_author", "deliver_now", gid://t/Answer/9
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = ? LIMIT 1[0m  [["id", 9]]
+Unpermitted parameter: question_id
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d] Performing ActionMailer::DeliveryJob from SuckerPunch(mailers) with arguments: "MainMailer", "notify_question_author", "deliver_now", gid://t/Answer/9
+Redirected to http://localhost:3000/questions/9
+Completed 302 Found in 23ms (ActiveRecord: 4.9ms)
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 16:59:21 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[35mQuestion Load (0.1ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.4ms)
+  [1m[36mAnswer Load (0.1ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC[0m  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (4.3ms)
+  Rendered home/_navbar.html.erb (0.2ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 25ms (Views: 23.5ms | ActiveRecord: 0.2ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d]   [1m[35mQuestion Load (0.2ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 9]]
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d]   Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.1ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d]   Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.1ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d] 
+MainMailer#notify_question_author: processed outbound mail in 5037.1ms
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d] 
+Sent mail to elon@gmail.com (5.1ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d] Date: Mon, 13 Aug 2018 16:59:26 +0100
+From: elon@tesla.com
+To: elon@gmail.com
+Message-ID: <5b71aade85533_a5823fdbf5d585347699@Admins-MacBook-Pro.local.mail>
+Subject: New answer to your question
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_5b71aade83e64_a5823fdbf5d5853476877";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_5b71aade83e64_a5823fdbf5d5853476877
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+My answer:
+
+Electric cars ftw 
+
+
+----==_mimepart_5b71aade83e64_a5823fdbf5d5853476877
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <body>
+    Hi,
+
+<h3>My answer:</h3>
+
+<p>
+  Electric cars ftw 
+</p>
+
+  </body>
+</html>
+
+----==_mimepart_5b71aade83e64_a5823fdbf5d5853476877--
+
+[ActiveJob] [ActionMailer::DeliveryJob] [d0e3e623-1dfa-471b-99a0-14014ed3cb7d] Performed ActionMailer::DeliveryJob from SuckerPunch(mailers) in 5043.76ms
+
+
+Started GET "/" for ::1 at 2018-08-13 16:59:26 +0100
+Processing by HomeController#index as HTML
+  [1m[36mQuestion Load (0.1ms)[0m  [1mSELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC[0m
+  Rendered home/index.html.erb within layouts/application (1.1ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (12.4ms)
+Completed 200 OK in 34ms (Views: 33.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/" for ::1 at 2018-08-13 17:03:35 +0100
+Processing by HomeController#index as HTML
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC
+  Rendered home/index.html.erb within layouts/application (1.4ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (0.4ms)
+Completed 200 OK in 42ms (Views: 41.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 17:03:37 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mQuestion Load (0.2ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.3ms)
+  [1m[35mAnswer Load (0.1ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (6.7ms)
+  Rendered home/_navbar.html.erb (0.0ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 36ms (Views: 33.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for ::1 at 2018-08-13 17:03:39 +0100
+Processing by HomeController#index as HTML
+  [1m[36mQuestion Load (0.1ms)[0m  [1mSELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC[0m
+  Rendered home/index.html.erb within layouts/application (1.3ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 37ms (Views: 35.6ms | ActiveRecord: 0.1ms)
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "questions"[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "answers"
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "answers"[0m
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "questions"[0m
+  [1m[35mQuestion Load (0.5ms)[0m  SELECT "questions".* FROM "questions"
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "answers"[0m
+  [1m[35mAnswer Load (0.3ms)[0m  SELECT "answers".* FROM "answers"
+
+
+Started GET "/" for ::1 at 2018-08-13 17:09:23 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomeController#index as HTML
+  [1m[35mQuestion Load (0.6ms)[0m  SELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC
+  Rendered home/index.html.erb within layouts/application (13.1ms)
+  Rendered home/_navbar.html.erb (0.4ms)
+  Rendered home/_new_question_form.html.erb (0.8ms)
+Completed 200 OK in 270ms (Views: 253.9ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 17:09:26 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mQuestion Load (0.2ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.7ms)
+  [1m[35mAnswer Load (0.4ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (9.5ms)
+  Rendered home/_navbar.html.erb (0.0ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 53ms (Views: 27.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for ::1 at 2018-08-13 17:10:09 +0100
+Processing by HomeController#index as HTML
+  [1m[36mQuestion Load (0.2ms)[0m  [1mSELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC[0m
+  Rendered home/index.html.erb within layouts/application (1.4ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (0.3ms)
+Completed 200 OK in 67ms (Views: 65.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/assets/answers.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/home.self-b1f31dd17a8f47ddfab0c95be622be4f831c9689017d1f116aeb888f9d26f9fc.css?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/questions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/jquery_ujs.self-784a997f6726036b1993eb2217c9cb558e1cbb801c6da88105588c56f13b466a.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/jquery.self-bd7ddd393353a8d2480a622e80342adf488fb6006d667e8b42e4c0073393abee.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/turbolinks.self-2db6ec539b9190f75e1d477b305df53d12904d5cafdd47c7ffd91ba25cbec128.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/answers.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/home.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/questions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/assets/application.self-3a3c8b61bda630ee689740ce7cbd0dd8ea6fdd45e2c42eef4661ab38cf268afe.js?body=1" for ::1 at 2018-08-13 17:10:09 +0100
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 17:10:14 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[35mQuestion Load (0.1ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.3ms)
+  [1m[36mAnswer Load (0.1ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC[0m  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (3.2ms)
+  Rendered home/_navbar.html.erb (0.0ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 25ms (Views: 23.7ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/answers" for ::1 at 2018-08-13 17:10:45 +0100
+Processing by AnswersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"O6f4kH6T9z7ffjBRA8Mq3WMHYJ5W4DzZZp7lfwpUn3wTozXl6HezTHEmV9gG7QNSNJPf69Hz1qd9tUQSN3SJgQ==", "answer"=>{"question_id"=>"9", "email"=>"larry@gmail.com", "body"=>"Rockets and Cars require money... lots of money"}}
+  [1m[35mQuestion Load (0.1ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 9]]
+Unpermitted parameter: question_id
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "answers" ("email", "body", "question_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["email", "larry@gmail.com"], ["body", "Rockets and Cars require money... lots of money"], ["question_id", 9], ["created_at", "2018-08-13 16:10:45.504040"], ["updated_at", "2018-08-13 16:10:45.504040"]]
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+[ActiveJob] Enqueued ActionMailer::DeliveryJob (Job ID: ca44042e-69ef-4110-9607-ccd07fc8136e) to SuckerPunch(mailers) with arguments: "MainMailer", "notify_question_author", "deliver_now", gid://t/Answer/10
+Unpermitted parameter: question_id
+  [1m[35mAnswer Load (0.4ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = ? LIMIT 1  [["id", 10]]
+Redirected to http://localhost:3000/questions/9
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e] Performing ActionMailer::DeliveryJob from SuckerPunch(mailers) with arguments: "MainMailer", "notify_question_author", "deliver_now", gid://t/Answer/10
+Completed 302 Found in 72ms (ActiveRecord: 3.3ms)
+
+
+Started GET "/questions/9" for ::1 at 2018-08-13 17:10:45 +0100
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mQuestion Load (0.1ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+  Rendered home/_new_answer_form.html.erb (0.2ms)
+  [1m[35mAnswer Load (0.1ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = ?  ORDER BY "answers"."created_at" DESC  [["question_id", 9]]
+  Rendered questions/show.html.erb within layouts/application (3.4ms)
+  Rendered home/_navbar.html.erb (0.0ms)
+  Rendered home/_new_question_form.html.erb (0.2ms)
+Completed 200 OK in 34ms (Views: 32.3ms | ActiveRecord: 0.2ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e]   [1m[36mQuestion Load (1.8ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1[0m  [["id", 9]]
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e]   Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.5ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e]   Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.7ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e] 
+MainMailer#notify_question_author: processed outbound mail in 5275.4ms
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e] 
+Sent mail to elon@gmail.com (10.4ms)
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e] Date: Mon, 13 Aug 2018 17:10:50 +0100
+From: larry@gmail.com
+To: elon@gmail.com
+Message-ID: <5b71ad8acfe78_a83c3ffa7a03721c538@Admins-MacBook-Pro.local.mail>
+Subject: New answer to your question
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_5b71ad8ace16c_a83c3ffa7a03721c4c9";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_5b71ad8ace16c_a83c3ffa7a03721c4c9
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+My answer:
+
+Rockets and Cars require money... lots of money
+
+
+----==_mimepart_5b71ad8ace16c_a83c3ffa7a03721c4c9
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <body>
+    Hi,
+
+<h3>My answer:</h3>
+
+<p>
+  Rockets and Cars require money... lots of money
+</p>
+
+  </body>
+</html>
+
+----==_mimepart_5b71ad8ace16c_a83c3ffa7a03721c4c9--
+
+[ActiveJob] [ActionMailer::DeliveryJob] [ca44042e-69ef-4110-9607-ccd07fc8136e] Performed ActionMailer::DeliveryJob from SuckerPunch(mailers) in 5286.96ms
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "questions"[0m
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT "questions".* FROM "questions"
+  [1m[36mQuestion Load (0.2ms)[0m  [1mSELECT  "questions".* FROM "questions"  ORDER BY "questions"."id" DESC LIMIT 1[0m
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT  "questions".* FROM "questions"  ORDER BY "questions"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "answers"[0m
+  [1m[35mAnswer Load (0.2ms)[0m  SELECT "answers".* FROM "answers"
+  [1m[36mAnswer Load (0.3ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" DESC LIMIT 1[0m
+
+
+Started GET "/" for ::1 at 2018-08-13 17:12:00 +0100
+Processing by HomeController#index as HTML
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT "questions".* FROM "questions"  ORDER BY "questions"."created_at" DESC
+  Rendered home/index.html.erb within layouts/application (1.3ms)
+  Rendered home/_navbar.html.erb (0.1ms)
+  Rendered home/_new_question_form.html.erb (0.3ms)
+Completed 200 OK in 34ms (Views: 33.0ms | ActiveRecord: 0.2ms)
+  [1m[35mAnswer Load (0.2ms)[0m  SELECT "answers".* FROM "answers"
+  [1m[36mAnswer Load (0.8ms)[0m  [1mSELECT "answers".* FROM "answers"[0m
+  [1m[35mAnswer Load (0.3ms)[0m  SELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" DESC LIMIT 1
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" ASC LIMIT 1[0m
+  [1m[35mAnswer Load (0.4ms)[0m  SELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" DESC LIMIT 1
+  [1m[36mAnswer Load (0.5ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" DESC LIMIT 1[0m
+  [1m[35mAnswer Load (0.2ms)[0m  SELECT "answers".* FROM "answers"
+
+
+Started GET "/rails/mailers/main_mailer/notify_question_author" for ::1 at 2018-08-13 17:17:27 +0100
+Processing by Rails::MailersController#preview as HTML
+  Parameters: {"path"=>"main_mailer/notify_question_author"}
+  [1m[36mAnswer Load (1.3ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" ASC LIMIT 1[0m
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 8]]
+  Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.4ms)
+  Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.2ms)
+
+MainMailer#notify_question_author: processed outbound mail in 5055.3ms
+  Rendered /Users/jamesenglish/.rvm/gems/ruby-2.3.4/gems/railties-4.2.7.1/lib/rails/templates/rails/mailers/email.html.erb (13.5ms)
+Completed 200 OK in 5102ms (Views: 27.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/rails/mailers/main_mailer/notify_question_author?part=text%2Fhtml" for ::1 at 2018-08-13 17:17:32 +0100
+Processing by Rails::MailersController#preview as HTML
+  Parameters: {"part"=>"text/html", "path"=>"main_mailer/notify_question_author"}
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" ASC LIMIT 1[0m
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 8]]
+  Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.1ms)
+  Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.1ms)
+
+MainMailer#notify_question_author: processed outbound mail in 5038.0ms
+  Rendered text template (0.0ms)
+Completed 200 OK in 5045ms (Views: 3.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/rails/mailers/main_mailer/notify_question_author" for ::1 at 2018-08-13 17:18:34 +0100
+Processing by Rails::MailersController#preview as HTML
+  Parameters: {"path"=>"main_mailer/notify_question_author"}
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" ASC LIMIT 1[0m
+  [1m[35mQuestion Load (0.1ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 8]]
+  Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.2ms)
+  Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.1ms)
+
+MainMailer#notify_question_author: processed outbound mail in 5036.4ms
+  Rendered /Users/jamesenglish/.rvm/gems/ruby-2.3.4/gems/railties-4.2.7.1/lib/rails/templates/rails/mailers/email.html.erb (8.5ms)
+Completed 200 OK in 5057ms (Views: 16.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/rails/mailers/main_mailer/notify_question_author?part=text%2Fhtml" for ::1 at 2018-08-13 17:18:39 +0100
+Processing by Rails::MailersController#preview as HTML
+  Parameters: {"part"=>"text/html", "path"=>"main_mailer/notify_question_author"}
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers"  ORDER BY "answers"."id" ASC LIMIT 1[0m
+  [1m[35mQuestion Load (0.2ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT 1  [["id", 8]]
+  Rendered main_mailer/notify_question_author.html.erb within layouts/mailer (0.1ms)
+  Rendered main_mailer/notify_question_author.text.erb within layouts/mailer (0.0ms)
+
+MainMailer#notify_question_author: processed outbound mail in 5037.1ms
+  Rendered text template (0.0ms)
+Completed 200 OK in 5046ms (Views: 0.4ms | ActiveRecord: 0.4ms)
